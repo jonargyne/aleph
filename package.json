@@ -1,0 +1,19 @@
+{
+  "name": "aleph",
+  "version": "1.0.0",
+  "description": "OSINT engine",
+  "main": "aleph.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonargyne/aleph.git"
+  },
+  "author": "Johan Argyne",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonargyne/aleph/issues"
+  },
+  "homepage": "https://github.com/jonargyne/aleph#readme"
+}
