@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ALEPH</title>
+
+    <!-- Mapbox.js -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
+    <link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css' rel='stylesheet' />
+    
+    <style>
+      html, body {
+          overflow: hidden;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          background-color: black;
+      }
+
+      h1 {
+        color: darkgray;
+        text-align: center;
+      }
+
+      div {
+        color: darkgray;
+      }
+
+      input {
+        color: darkgray;
+        background-color: black;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 75%;
+      }
+
+      #ui {
+        position: static;
+        text-align: center;
+        float: right;
+        width: 25%;
+      }
+
+      #extracting {
+        display: none;
+      }
+
+      #output {
+        display: none;
+        overflow-y: scroll;
+      }
+    </style>
+  </head>
+  <body>
+    <div id='map'></div>
+    <div id ='ui'>
+      <h1>𐤀 L E P H</h1>
+      <div id='input'>
+        <label for='url'>URL:</label>
+        <input type='text' id='url' name='url'>
+        <input type='submit' id='extract' value='EXTRACT' onclick='sendUrl(inputUrl.value)'>
+      </div>
+      <div id='extracting'>
+        <p>EXTRACTING...</p>
+      </div>
+      <div id='output'>
+        <p>OUTPUT:</p>
+      </div>
+    </div>
+    <script src="client/js/socket.js"></script>
+    <script src="client/js/client.js"></script>
+  </body>
+</html>
