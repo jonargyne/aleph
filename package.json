@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/jonargyne/aleph/issues"
   },
-  "homepage": "https://github.com/jonargyne/aleph#readme"
+  "homepage": "https://github.com/jonargyne/aleph#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "horseman-article-parser": "^0.8.1",
+    "public-eye": "^0.3.3",
+    "socket.io": "^2.3.0"
+  }
 }
