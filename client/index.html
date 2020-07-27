@@ -9,7 +9,7 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
     <link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css' rel='stylesheet' />
-    
+
     <style>
       html, body {
           overflow: hidden;
@@ -52,6 +52,11 @@
         display: none;
       }
 
+      #extracting-gif {
+        max-width: 45%;
+        max-height: 45%;
+      }
+
       #output {
         display: none;
         overflow-y: scroll;
@@ -68,7 +73,7 @@
         <input type='submit' id='extract' value='EXTRACT' onclick='sendUrl(inputUrl.value)'>
       </div>
       <div id='extracting'>
-        <p>EXTRACTING...</p>
+        <img src='client/3va2.gif' id='extracting-gif'></img>
       </div>
       <div id='output'>
         <p>OUTPUT:</p>
