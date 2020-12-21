@@ -34,6 +34,20 @@
         background-color: black;
       }
 
+      select {
+        color: darkgray;
+        background-color: black;
+      }
+
+      button {
+        color: darkgray;
+        background-color: black;
+      }
+
+      li {
+        list-style-type: none;
+      }
+
       #map {
         position: absolute;
         top: 0;
@@ -48,18 +62,48 @@
         width: 25%;
       }
 
-      #extracting {
+      #menu {
         display: none;
       }
 
-      #extracting-gif {
+      #feed {
+        display: none;
+        overflow-y: scroll;
+      }
+
+      #add {
+        display: none;
+        overflow-y: scroll;
+      }
+
+      #url-extract {
+        display: none;
+      }
+
+      #processing {
+        display: none;
+      }
+
+      #processing-gif {
         max-width: 45%;
         max-height: 45%;
       }
 
       #output {
         display: none;
-        overflow-y: scroll;
+        overflow-y: auto;
+      }
+
+      #out-key {
+        color: #FDEBD0;
+      }
+
+      #out-ent {
+        color: #D4EFDF;
+      }
+
+      #out-loc {
+        color: #D6EAF8;
       }
     </style>
   </head>
@@ -67,16 +111,69 @@
     <div id='map'></div>
     <div id ='ui'>
       <h1>𐤀 L E P H</h1>
-      <div id='input'>
-        <label for='url'>URL:</label>
-        <input type='text' id='url' name='url'>
-        <input type='submit' id='extract' value='EXTRACT' onclick='sendUrl(inputUrl.value)'>
+      <div id='code'>
+        <label for='code-input'>CODE:</label>
+        <input type='text' id='code-input' name='code-input'>
+        <input type='submit' id='code-submit' value='SUBMIT' onclick='sendCode(inputCode.value)'>
       </div>
-      <div id='extracting'>
-        <img src='client/3va2.gif' id='extracting-gif'></img>
+      <div id='menu'>
+        <button id='view-feed' onclick='clickViewFeed()'>VIEW FEED</button>
+        <button id='add-keywords' onclick='clickAddKeywords()'>ADD KEYWORDS</button>
+        <button id='extract-url' onclick='clickExtractUrl()'>EXTRACT FROM URL</button>
+        <br>
+        <br>
+        <hr>
+        <br>
       </div>
-      <div id='output'>
-        <p>OUTPUT:</p>
+      <div id='feed'>
+      </div>
+      <div id ='add'>
+        <label for='keyword-input'>KEYWORD:</label>
+        <input type='text' id='keyword-input' name='keyword-input'>
+        <input type='submit' id='keyword-input-add' value='ADD' onclick='addKeyword(inputKeyword.value)'>
+        <br>
+        <div>
+          <ul id='keyword-list'></ul>
+        </div>
+        <br>
+        <label for='location-input'>LOCATION:</label>
+        <input type='text' id='location-input' name='location-input'>
+        <input type='submit' id='location-input-add' value='ADD' onclick='addLocation(inputLocation.value)'>
+        <br>
+        <div>
+          <ul id='location-list'></ul>
+        </div>
+        <br>
+        <label for='entity-input'>ENTITY:</label>
+        <input type='text' id='entity-input' name='entity-input'>
+        <input type='submit' id='entity-input-add' value='ADD' onclick='addEntity(inputEntity.value)'>
+        <br>
+        <div>
+          <ul id='entity-list'></ul>
+        </div>
+        <br>
+        <br>
+      </div>
+      <div id='url-extract'>
+        <div id='input'>
+          <label for='url-input'>URL:</label>
+          <input type='text' id='url-input' name='url-input'>
+          <select id='depth-input' name='depth-input'>
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+          </select>
+          <input type='submit' id='extract' value='EXTRACT' onclick='sendUrl(inputUrl.value, inputDepth.value)'>
+        </div>
+        <div id='output'>
+          <p>OUTPUT:</p>
+          <div id='out-key'></div>
+          <div id='out-ent'></div>
+          <div id='out-loc'></div>
+        </div>
+      </div>
+      <div id='processing'>
+        <img src='client/3va2.gif' id='processing-gif'></img>
       </div>
     </div>
     <script src="client/js/socket.js"></script>

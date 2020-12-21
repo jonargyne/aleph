@@ -30,4 +30,4 @@ extract = async function(parent, urls, max, depth=0){
     }
   }
   return res;
-}
+};

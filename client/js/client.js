@@ -1,11 +1,27 @@
 var socket = io({transports: ['websocket'], upgrade: false});
 
 // DOM elements
+var codeDiv = document.getElementById('code');
+var inputCode = document.getElementById('code-input');
+var menu = document.getElementById('menu');
+var feedDiv = document.getElementById('feed');
+var addKeywordsDiv = document.getElementById('add');
+var inputKeyword = document.getElementById('keyword-input');
+var keywordList = document.getElementById('keyword-list');
+var inputLocation = document.getElementById('location-input');
+var locationList = document.getElementById('location-list');
+var inputEntity = document.getElementById('entity-input');
+var entityList = document.getElementById('entity-list');
+var urlExtractDiv = document.getElementById('url-extract');
 var inputDiv = document.getElementById('input');
-var inputUrl = document.getElementById('url');
+var inputUrl = document.getElementById('url-input');
+var inputDepth = document.getElementById('depth-input');
 var extractButton = document.getElementById('extract');
-var extractingDiv = document.getElementById('extracting');
+var processingDiv = document.getElementById('processing');
 var outputDiv = document.getElementById('output');
+var outKey = document.getElementById('out-key');
+var outEnt = document.getElementById('out-ent');
+var outLoc = document.getElementById('out-loc');
 
 // Mapbox.js
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2lzdGVyY2lhbmNhcGl0YWwiLCJhIjoiY2s5N2RsczhmMGU1dzNmdGEzdzU2YTZhbiJ9.-xDMU_9FYbMXJf3UD4ocCw';
@@ -76,14 +92,133 @@ map.on('load', function(){
   );
 });
 
-var sendUrl = function(url){
-  inputDiv.style.display = 'none';
-  extractingDiv.style.display = 'inline';
-  socket.emit('url', url);
+var project = {};
+var incoming = {
+  key: [],
+  ent: [],
+  loc: []
 };
 
-socket.on('output', function(data){
-  console.log(data);
-  extractingDiv.style.display = 'none';
+var sendCode = function(code){
+  if(code != ''){
+    console.log(code);
+    socket.emit('code', code);
+  }
+};
+
+var clickViewFeed = function(){
+  feedDiv.style.display = 'inline';
+  addKeywordsDiv.style.display = 'none';
+  urlExtractDiv.style.display = 'none';
+};
+
+var clickAddKeywords = function(){
+  feedDiv.style.display = 'none';
+  addKeywordsDiv.style.display = 'inline';
+  urlExtractDiv.style.display = 'none';
+};
+
+var addKeyword = function(keyword){
+  socket.emit('addKeyword', keyword);
+  inputKeyword.value = '';
+};
+
+var addLocation = function(keyword){
+  socket.emit('addLocation', keyword);
+  inputLocation.value = '';
+};
+
+var addEntity = function(keyword){
+  socket.emit('addEntity', keyword);
+  inputEntity.value = '';
+};
+
+var clickExtractUrl = function(){
+  feedDiv.style.display = 'none';
+  addKeywordsDiv.style.display = 'none';
+  urlExtractDiv.style.display = 'inline';
+};
+
+var sendUrl = function(url, depth){
+  urlExtractDiv.style.display = 'none';
+  inputDiv.style.display = 'none';
+  processingDiv.style.display = 'inline';
+  socket.emit('url', {url:url, depth:depth});
+  inputUrl.value = '';
+};
+
+var showOutput = function(){
+  for(i in incoming.key){
+    outKey.innerHTML += '<li>' + incoming.key[i] + '</li>';
+  }
+  for(i in incoming.ent){
+    outEnt.innerHTML += '<li>' + incoming.ent[i] + '</li>';
+  }
+  for(i in incoming.loc){
+    outLoc.innerHTML += '<li>' + incoming.loc[i] + '</li>';
+  }
+  incoming = {
+    key: [],
+    ent: [],
+    loc: []
+  };
+};
+
+var buildLists = function(){
+  keywordList.innerHTML = '';
+  locationList.innerHTML = '';
+  entityList.innerHTML = '';
+  for(i in project.keywords){
+    keywordList.innerHTML += '<li>' + project.keywords[i] + '</li>';
+  }
+  for(i in project.locations){
+    locationList.innerHTML += '<li>' + project.locations[i] + '</li>';
+  }
+  for(i in project.entities){
+    entityList.innerHTML += '<li>' + project.entities[i] + '</li>';
+  }
+};
+
+socket.on('granted', function(data){
+  project = data;
+  buildLists();
+  codeDiv.style.display = 'none';
+  menu.style.display = 'inline';
+});
+
+socket.on('key', function(data){
+  for(i in incoming.key){
+    if(data == incoming.key[i]){
+      return;
+    }
+  }
+  incoming.key.push(data);
+  console.log('key: ' + data);
+});
+
+socket.on('ent', function(data){
+  for(i in incoming.ent){
+    if(data == incoming.ent[i]){
+      return;
+    }
+  }
+  incoming.ent.push(data);
+  console.log('ent: ' + data);
+});
+
+socket.on('loc', function(data){
+  for(i in incoming.loc){
+    if(data == incoming.loc[i]){
+      return;
+    }
+  }
+  incoming.loc.push(data);
+  console.log('loc: ' + data);
+});
+
+socket.on('output', function(){
+  showOutput();
+  processingDiv.style.display = 'none';
   outputDiv.style.display = 'inline';
+  urlExtractDiv.style.display = 'inline';
 });
